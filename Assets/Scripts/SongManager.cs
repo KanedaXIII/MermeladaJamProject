@@ -12,32 +12,40 @@ public class SongManager : MonoBehaviour
 
     public Row[] rows = new Row[3];
 
+    public SheetMusicReader songMusicReader;
+
     float startTime = 0;
     bool started = false;
-    struct NoteInfo//por coordinar con Samu
-    {
-        public int row;
-        public char type;
-        public float time;
-        public NoteInfo(int row,float time, char type)
-        {
-            this.row = row;
-            this.time = time;
-            this.type = type;
-        }
-    }
+    //struct NoteInfo//por coordinar con Samu
+    //{
+    //    public int row;
+    //    public char type;
+    //    public float time;
+    //    public NoteInfo(int row,float time, char type)
+    //    {
+    //        this.row = row;
+    //        this.time = time;
+    //        this.type = type;
+    //    }
+    //}
     void Awake()
     {
         //Carga de prueba
-        rowQueue[0].Enqueue(2.5f);
-        rowQueue[0].Enqueue(5);
-        rowQueue[0].Enqueue(7);
-        rowQueue[0].Enqueue(12);
-        rowQueue[0].Enqueue(16.5f);
-        rowQueue[0].Enqueue(20);
-        rowQueue[0].Enqueue(25);
-        rowQueue[0].Enqueue(26);
-        rowQueue[0].Enqueue(30);
+        //rowQueue[0].Enqueue(2.5f);
+        //rowQueue[0].Enqueue(5);
+        //rowQueue[0].Enqueue(7);
+        //rowQueue[0].Enqueue(12);
+        //rowQueue[0].Enqueue(16.5f);
+        //rowQueue[0].Enqueue(20);
+        //rowQueue[0].Enqueue(25);
+        //rowQueue[0].Enqueue(26);
+        //rowQueue[0].Enqueue(30);
+        //songMusicReader.ReadCSV();
+        for (int i = 0; i < songMusicReader.DataSong.Length; i++)
+        {
+            NoteInfo noteInfo = songMusicReader.DataSong[i];
+            rowQueue[noteInfo.row].Enqueue(noteInfo.time);
+        }
         Debug.Log("song load");
 
         //fin carga de prueba
