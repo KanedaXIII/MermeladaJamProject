@@ -6,34 +6,30 @@ public class SheetMusicReader : MonoBehaviour
 {
     public TextAsset sheetMusicData;
 
-    private NoteInfo[] _dataSongCurrent;
+    [SerializeField]
+    private int _nRows = 3;
 
-    public NoteInfo[] DataSong { get => _dataSongCurrent; set => _dataSongCurrent = value; }
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        ReadCSV();
-    }
-
-    public void ReadCSV()
+    public Queue<NoteInfo>[] ReadCSV()
     {
         string[] data = sheetMusicData.text.Split(new string[] {"\n" },System.StringSplitOptions.None);
-
-        int tableSize = data.Length/3 - 1;
-        NoteInfo[] _dataSong = new NoteInfo[tableSize];
-
-        for (int i = 1; i < tableSize; i++)
+        Queue <NoteInfo>[]  queueRow= new Queue<NoteInfo>[_nRows];
+        for(int i = 0; i < _nRows; i++)
         {
-            string[] dataC = data[i].Split(new string[] {";"},System.StringSplitOptions.None);
-            _dataSong[i] = new NoteInfo();
-            Debug.Log(dataC[0]);
-            _dataSong[i].row = int.Parse(dataC[0]);
-            Debug.Log(dataC[1]);
-            _dataSong[i].time = float.Parse(data[1]);
-            _dataSong[i].type = char.Parse(data[2]);
-           
+            queueRow[i] = new Queue<NoteInfo>();
         }
-        _dataSongCurrent = _dataSong;
+        for (int i = 1; i < data.Length; i++)
+        {
+            NoteInfo _dataSong = new NoteInfo();
+
+            string[] dataC = data[i].Split(new string[] {";"},System.StringSplitOptions.None);
+            _dataSong = new NoteInfo();
+            _dataSong.row = int.Parse(dataC[0]);
+            _dataSong.time = float.Parse(dataC[1].Trim());
+            _dataSong.type = char.Parse(dataC[2].Trim());
+            queueRow[_dataSong.row].Enqueue(_dataSong);
+        }
+       
+
+        return queueRow;
     }
 }

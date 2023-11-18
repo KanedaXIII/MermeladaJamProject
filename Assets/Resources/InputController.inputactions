@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "ChangeActiveRow",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "f7c22ee5-7cde-46d6-801d-41bc1805e211",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -62,6 +62,17 @@
                     "name": "",
                     "id": "e7016ff7-9d6b-4126-b2f7-7b64f8f70841",
                     "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeActiveRow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69dcb590-7775-42e7-8738-dafaa7197d3e",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -14,12 +14,19 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        songManager.StartSong();
+        StartCoroutine (StartWaitSong());
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    IEnumerator StartWaitSong()
+    {
+        yield return new WaitForSeconds(2f);
+        songManager.StartSong();
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEditor.Rendering.Universal.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,7 +9,11 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     [SerializeField]
-    private  Row _testRowl;
+    private float _mouseSensitivity;
+    [SerializeField]
+    private SongManager _songManager;
+    [SerializeField]
+    private int _row = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +28,7 @@ public class InputManager : MonoBehaviour
 
     private void OnPlayNote()
     {
-        if ( _testRowl.activeActionZone() )
+        if (_songManager.ActivateRow())
         {
             Debug.Log("Niceeee!!!!");
         }
@@ -32,9 +38,19 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void OnChangeActiveRow()
+    private void OnChangeActiveRow(InputValue value)
     {
-        Debug.Log("Row");
+        if (value.Get<Vector2>().x > _mouseSensitivity)
+        {
+            _row = Math.Min(_row + 1, 2);
+        }
+        else if(value.Get<Vector2>().x < -_mouseSensitivity)
+        {
+
+            _row = Math.Max(_row - 1, 0);
+        }
+
+        _songManager.SetCurrentActionZone(_row);
 
     }
 }

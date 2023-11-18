@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SongManager : MonoBehaviour
 {
     public float noteDuration = 2;
-    Queue<float>[] rowQueue = { new Queue<float>(), new Queue<float>(), new Queue<float>() };
+    Queue<NoteInfo>[] rowQueue = { new Queue<NoteInfo>(), new Queue<NoteInfo>(), new Queue<NoteInfo>() };
 
     float[] nextNoteR = { -1, -1, -1 };
 
@@ -14,39 +15,19 @@ public class SongManager : MonoBehaviour
 
     public SheetMusicReader songMusicReader;
 
+    public Row _currentRow;
+
     float startTime = 0;
     bool started = false;
-    //struct NoteInfo//por coordinar con Samu
-    //{
-    //    public int row;
-    //    public char type;
-    //    public float time;
-    //    public NoteInfo(int row,float time, char type)
-    //    {
-    //        this.row = row;
-    //        this.time = time;
-    //        this.type = type;
-    //    }
-    //}
+
     void Awake()
     {
-        //Carga de prueba
-        //rowQueue[0].Enqueue(2.5f);
-        //rowQueue[0].Enqueue(5);
-        //rowQueue[0].Enqueue(7);
-        //rowQueue[0].Enqueue(12);
-        //rowQueue[0].Enqueue(16.5f);
-        //rowQueue[0].Enqueue(20);
-        //rowQueue[0].Enqueue(25);
-        //rowQueue[0].Enqueue(26);
-        //rowQueue[0].Enqueue(30);
-        //songMusicReader.ReadCSV();
-        for (int i = 0; i < songMusicReader.DataSong.Length; i++)
-        {
-            NoteInfo noteInfo = songMusicReader.DataSong[i];
-            rowQueue[noteInfo.row].Enqueue(noteInfo.time);
-        }
-        Debug.Log("song load");
+        _currentRow = rows[0];
+        _currentRow.actionzone.gameObject.GetComponent<Image>().color = Color.red;
+    }
+    void Start()
+    {
+       
 
         //fin carga de prueba
         for (int i = 0; i < nextNoteR.Length; i++)
@@ -67,7 +48,7 @@ public class SongManager : MonoBehaviour
                 {
                     if (rowQueue[i].Count > 0)
                     {
-                        nextNoteR[i] = rowQueue[i].Dequeue()-noteDuration;
+                        nextNoteR[i] = rowQueue[i].Dequeue().time-noteDuration;
                         rows[i].spawnNote(noteDuration);
                         Debug.Log("nextNote: " + nextNoteR[i]);
                     }
@@ -83,6 +64,8 @@ public class SongManager : MonoBehaviour
     }
     public void StartSong()
     {
+        rowQueue = songMusicReader.ReadCSV();
+        Debug.Log("Song load");
         Debug.Log("StartSong!!");
         started = true;
         startTime = Time.time;
@@ -90,17 +73,24 @@ public class SongManager : MonoBehaviour
         {
             if (rowQueue[i].Count > 0)
             {
-                nextNoteR[i] = rowQueue[i].Dequeue()-noteDuration;
+                nextNoteR[i] = rowQueue[i].Dequeue().time -noteDuration;
                 Debug.Log("nextNote: " + nextNoteR[i]);
             }
             else
             {
                 nextNoteR[i] = Time.time - 1;
+                Debug.Log("VOID LIST");
             }
         }
     }
-    public bool ActivateRow(int num) {//Usame Samu!!
-        return rows[num].activeActionZone();
-    
+    public bool ActivateRow() {//Usame Samu!!
+        return _currentRow.activeActionZone();
+    }
+    public void SetCurrentActionZone(int selectRow)
+    {
+        _currentRow.actionzone.gameObject.GetComponent<Image>().color = Color.grey;
+        _currentRow = rows[selectRow];
+        Debug.Log("Fila seleccionada= "+selectRow);
+       _currentRow.actionzone.gameObject.GetComponent<Image>().color = Color.red;
     }
 }

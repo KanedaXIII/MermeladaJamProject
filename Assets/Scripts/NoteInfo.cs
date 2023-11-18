@@ -11,5 +11,8 @@ public class NoteInfo
     }
     public NoteInfo()
     {
+        this.row = 0;
+        this.time = 0;
+        this.type = 'o';
     }
 }
