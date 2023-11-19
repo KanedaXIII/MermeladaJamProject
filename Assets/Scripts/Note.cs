@@ -26,7 +26,8 @@ public class Note : MonoBehaviour
         if (transform.position.y <= endpos)
         {
             Debug.Log("miss note");
-            Destroy(gameObject);//Convertir en pool
+            //Destroy(gameObject);//Convertir en pool
+            SimplePool.Despawn(gameObject);
         }
         else
         {
@@ -47,7 +48,8 @@ public class Note : MonoBehaviour
         {
             Debug.Log("got it!!");
             // efecto guay
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            SimplePool.Despawn(gameObject);
         }
     }
     private void OnDestroy()
