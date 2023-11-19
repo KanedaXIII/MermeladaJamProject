@@ -5,27 +5,23 @@ using System.ComponentModel;
 using UnityEditor.Rendering.Universal.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class InputManager : MonoBehaviour
 {
+    [Header("Controls")]
     [SerializeField]
-    private float _mouseSensitivity;
+    [Range(0f, 1f)]
+    private float _mouseSensibility = 1;
+    [SerializeField] 
+    private float _scaleSensibility=10f;
     [SerializeField]
     private SongManager _songManager;
     [SerializeField]
     private int _row = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private float _amountXpos = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    #region Action
     private void OnPlayNote()
     {
         if (_songManager.ActivateRow())
@@ -40,17 +36,34 @@ public class InputManager : MonoBehaviour
 
     private void OnChangeActiveRow(InputValue value)
     {
-        if (value.Get<Vector2>().x > _mouseSensitivity)
+        float xN = value.Get<Vector2>().x;
+        
+        _amountXpos = +xN * _mouseSensibility;
+        //_row = 1;
+
+        Debug.Log("Amount X : " + _amountXpos);
+
+        if (_scaleSensibility < _amountXpos)
         {
+            //_row = 2;
             _row = Math.Min(_row + 1, 2);
         }
-        else if(value.Get<Vector2>().x < -_mouseSensitivity)
+        else if (-_scaleSensibility > _amountXpos)
         {
-
+            //_row = 0;
             _row = Math.Max(_row - 1, 0);
         }
-
         _songManager.SetCurrentActionZone(_row);
 
+        if (_amountXpos < (-_scaleSensibility * 2))
+        {
+            Debug.Log("Works");
+            _amountXpos = (-_amountXpos * 2);
+        }
+        else if (_amountXpos > (_scaleSensibility * 2))
+        {
+            _amountXpos = (_amountXpos * 2);
+        }
     }
+    #endregion
 }
