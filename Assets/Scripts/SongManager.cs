@@ -20,6 +20,10 @@ public class SongManager : MonoBehaviour
     float startTime = 0;
     bool started = false;
 
+    public AudioSource song;
+    [SerializeField]
+    private float _delaySong=1.5f;
+
     void Awake()
     {
         _currentRow = rows[0];
@@ -40,7 +44,7 @@ public class SongManager : MonoBehaviour
     {
         if (started)
         {
-          
+            
             for (int i = 0; i < nextNoteR.Length; i++)
             {
 
@@ -67,6 +71,7 @@ public class SongManager : MonoBehaviour
         rowQueue = songMusicReader.ReadCSV();
         Debug.Log("Song load");
         Debug.Log("StartSong!!");
+        
         started = true;
         startTime = Time.time;
         for (int i = 0; i < nextNoteR.Length; i++)

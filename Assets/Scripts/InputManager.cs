@@ -9,7 +9,9 @@ using UnityEngine.Windows;
 
 public class InputManager : MonoBehaviour
 {
+    [Header("Controls")]
     [SerializeField]
+    [Range(0f, 1f)]
     private float _mouseSensibility = 1;
     [SerializeField] 
     private float _scaleSensibility=10f;
@@ -17,8 +19,9 @@ public class InputManager : MonoBehaviour
     private SongManager _songManager;
     [SerializeField]
     private int _row = 0;
-
     private float _amountXpos = 0;
+
+    #region Action
     private void OnPlayNote()
     {
         if (_songManager.ActivateRow())
@@ -33,42 +36,34 @@ public class InputManager : MonoBehaviour
 
     private void OnChangeActiveRow(InputValue value)
     {
-        _amountXpos =+ value.Get<Vector2>().x * _mouseSensibility;
+        float xN = value.Get<Vector2>().x;
+        
+        _amountXpos = +xN * _mouseSensibility;
+        //_row = 1;
 
-        _row = 1;
+        Debug.Log("Amount X : " + _amountXpos);
 
-        Debug.Log("Amount X : "+_amountXpos);
-
-        if (_scaleSensibility > _amountXpos)
+        if (_scaleSensibility < _amountXpos)
         {
-            _row = 2;
+            //_row = 2;
+            _row = Math.Min(_row + 1, 2);
         }
-        else if (-_scaleSensibility < -_amountXpos)
+        else if (-_scaleSensibility > _amountXpos)
         {
-            _row = 0;
+            //_row = 0;
+            _row = Math.Max(_row - 1, 0);
         }
         _songManager.SetCurrentActionZone(_row);
 
-        if (_amountXpos < (-_scaleSensibility*2))
+        if (_amountXpos < (-_scaleSensibility * 2))
         {
             Debug.Log("Works");
-            _amountXpos = (-_amountXpos*2);
+            _amountXpos = (-_amountXpos * 2);
         }
-        else if(_amountXpos > (_scaleSensibility * 2))
+        else if (_amountXpos > (_scaleSensibility * 2))
         {
-            _amountXpos = ( _amountXpos * 2);
+            _amountXpos = (_amountXpos * 2);
         }
-        //if (n > (_mouseSensitivity + nSensitivity))
-        //{
-        //    _row = Math.Min(_row + 1, 2);
-        //    nSensitivity = 200;
-        //    _songManager.SetCurrentActionZone(_row);
-        //}
-        //else if (n < -(_mouseSensitivity + nSensitivity))
-        //{
-        //    _row = Math.Max(_row - 1, 0);
-        //    nSensitivity = 200;
-        //    _songManager.SetCurrentActionZone(_row);
-        //}
     }
+    #endregion
 }

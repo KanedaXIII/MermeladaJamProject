@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     IEnumerator StartWaitSong()
     {
         yield return new WaitForSeconds(2f);
+        
         songManager.StartSong();
+        
     }
 }
