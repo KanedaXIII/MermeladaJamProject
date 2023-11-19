@@ -38,32 +38,33 @@ public class InputManager : MonoBehaviour
     {
         float xN = value.Get<Vector2>().x;
         
-        _amountXpos = +xN * _mouseSensibility;
-        //_row = 1;
+        _amountXpos =_amountXpos+ (Time.deltaTime*xN * _mouseSensibility);
+        _row = 1;
 
-        Debug.Log("Amount X : " + _amountXpos);
+       
 
         if (_scaleSensibility < _amountXpos)
         {
-            //_row = 2;
-            _row = Math.Min(_row + 1, 2);
+            _row = 2;
+            //_row = Math.Min(_row + 1, 2);
         }
         else if (-_scaleSensibility > _amountXpos)
         {
-            //_row = 0;
-            _row = Math.Max(_row - 1, 0);
+           _row = 0;
+            //_row = Math.Max(_row - 1, 0);
         }
         _songManager.SetCurrentActionZone(_row);
 
         if (_amountXpos < (-_scaleSensibility * 2))
         {
             Debug.Log("Works");
-            _amountXpos = (-_amountXpos * 2);
+            _amountXpos = (-_scaleSensibility * 2);
         }
         else if (_amountXpos > (_scaleSensibility * 2))
         {
-            _amountXpos = (_amountXpos * 2);
+            _amountXpos = (_scaleSensibility * 2);
         }
+        Debug.Log("Amount X : " + _amountXpos+" xN"+xN);
     }
     #endregion
 }
