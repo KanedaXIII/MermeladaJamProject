@@ -609,7 +609,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6af9c605db8ed443bd80c7314d9a390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouseSensitivity: 0.02
+  _mouseSensibility: 1
+  _scaleSensibility: 1
   _songManager: {fileID: 1620004783}
   _row: 0
 --- !u!4 &1526914373
