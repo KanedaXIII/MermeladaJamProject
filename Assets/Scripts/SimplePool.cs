@@ -107,7 +107,7 @@ public static class SimplePool
 
             obj.transform.position = pos;
             obj.transform.rotation = rot;
-            obj.transform.parent = parent;
+            obj.transform.SetParent(parent);
             obj.SetActive(true);
             return obj;
 
