@@ -5,21 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void SetScene(string scn)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void goToPlay()
-    {
-        SceneManager.LoadScene("Play");
+        SceneManager.LoadScene(scn);
     }
 
     public void goToOptions()
@@ -27,7 +15,8 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene("Options");
     }
 
-    public void goToExit()
+    public void GoToExit()
     {
+        Application.Quit();
     }
 }
