@@ -9,6 +9,7 @@ public class Row : MonoBehaviour
     public List<Note> notes = new List<Note>();
     public GameObject notePrefab;
     public GameObject particlePrefab;
+    private GameObject[] particles = new GameObject[0];
     public bool activeActionZone()
     {
         bool point=false;
@@ -17,16 +18,16 @@ public class Row : MonoBehaviour
             if (notes[i].active)
             {
                 point = true;
-                GameObject confetti= SimplePool.Spawn(particlePrefab, actionzone.position, actionzone.rotation);
-                confetti.GetComponent<UnpoolConfetti>().show=true;
+                //GameObject confetti= SimplePool.Spawn(particlePrefab, actionzone.position, actionzone.rotation);
+                //confetti.GetComponent<UnpoolConfetti>().show=true;
             }
         }
         return point;
     }
     public void spawnNote(float duration)
     {
-        //GameObject go = SimplePool.Spawn(notePrefab, transform.position, transform.rotation);
-        GameObject go = Instantiate(notePrefab, transform);
+        GameObject go = SimplePool.Spawn(notePrefab, transform.position, transform.rotation,transform);
+        //GameObject go = Instantiate(notePrefab, transform);
         Note note = go.GetComponent<Note>();
         note.startpos = start.position.y;
         note.endpos = end.position.y;

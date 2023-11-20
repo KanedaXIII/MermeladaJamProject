@@ -48,17 +48,13 @@ public class InputManager : MonoBehaviour
         _amountXpos =_amountXpos+ (Time.deltaTime*xN * _mouseSensibility);
         _row = 1;
 
-       
-
         if (_scaleSensibility < _amountXpos)
         {
             _row = 2;
-            //_row = Math.Min(_row + 1, 2);
         }
         else if (-_scaleSensibility > _amountXpos)
         {
            _row = 0;
-            //_row = Math.Max(_row - 1, 0);
         }
         _songManager.SetCurrentActionZone(_row);
 

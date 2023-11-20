@@ -62,8 +62,6 @@ public class SongManager : MonoBehaviour
                     }
                 }
             }
-           
-
         }
     }
     public void StartSong()
@@ -95,6 +93,6 @@ public class SongManager : MonoBehaviour
     {
         _currentRow.actionzone.gameObject.GetComponent<Image>().color = Color.grey;
         _currentRow = rows[selectRow];
-       _currentRow.actionzone.gameObject.GetComponent<Image>().color = Color.red;
+       _currentRow.actionzone.gameObject.GetComponent<Image>().color = Color.white;
     }
 }
