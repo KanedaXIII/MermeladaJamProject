@@ -15,10 +15,16 @@ public class InputManager : MonoBehaviour
     private float _mouseSensibility = 1;
     [SerializeField] 
     private float _scaleSensibility=10f;
+    [Header("Sound")]
     [SerializeField]
     private SongManager _songManager;
+    [Header("Score")]
     [SerializeField]
+    private ScoreController _scoreController;
+    [SerializeField]
+    private int _scorePoints = 10;
     private int _row = 0;
+    
     private float _amountXpos = 0;
 
     #region Action
@@ -26,6 +32,7 @@ public class InputManager : MonoBehaviour
     {
         if (_songManager.ActivateRow())
         {
+            _scoreController.AddScore(_scorePoints);
             Debug.Log("Niceeee!!!!");
         }
         else
@@ -57,14 +64,12 @@ public class InputManager : MonoBehaviour
 
         if (_amountXpos < (-_scaleSensibility * 2))
         {
-            Debug.Log("Works");
             _amountXpos = (-_scaleSensibility * 2);
         }
         else if (_amountXpos > (_scaleSensibility * 2))
         {
             _amountXpos = (_scaleSensibility * 2);
         }
-        Debug.Log("Amount X : " + _amountXpos+" xN"+xN);
     }
     #endregion
 }

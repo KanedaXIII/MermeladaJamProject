@@ -54,7 +54,7 @@ public class SongManager : MonoBehaviour
                     {
                         nextNoteR[i] = rowQueue[i].Dequeue().time-noteDuration;
                         rows[i].spawnNote(noteDuration);
-                        Debug.Log("nextNote: " + nextNoteR[i]);
+                        //Debug.Log("nextNote: " + nextNoteR[i]);
                     }
                     else
                     {
@@ -95,7 +95,6 @@ public class SongManager : MonoBehaviour
     {
         _currentRow.actionzone.gameObject.GetComponent<Image>().color = Color.grey;
         _currentRow = rows[selectRow];
-        Debug.Log("Fila seleccionada= "+selectRow);
        _currentRow.actionzone.gameObject.GetComponent<Image>().color = Color.red;
     }
 }

@@ -24,17 +24,27 @@ public class ScoreController : MonoBehaviour
     {
         if (currentScore != score)
         {
+            Debug.Log(" PRE_Worksssssss SCOREEEEEE");
             float time = (Time.time - startTime) * updateVelocity;
-            score = (int)Mathf.Lerp(currentScore,score,time);
+            currentScore = (int)Mathf.Lerp(currentScore,score,time);
             if (time>=1)
             {
+                Debug.Log("Worksssssss SCOREEEEEE");
                 currentScore = score;
+                
             }
+            ScoreText.text = currentScore.ToString();
         }
     }
-    public void setScore(int nextScore)
+    public void SetScore(int nextScore)
     {
         score = nextScore;
         startTime = Time.time;
+    }
+
+    public void AddScore(int nScore) 
+    {
+        int newScore = nScore + score;
+        SetScore(newScore);
     }
 }
