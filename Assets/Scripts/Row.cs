@@ -9,7 +9,8 @@ public class Row : MonoBehaviour
     public List<Note> notes = new List<Note>();
     public GameObject notePrefab;
     public GameObject particlePrefab;
-    private GameObject[] particles = new GameObject[0];
+    public ParticleSystem[] goodParticles;
+    public ParticleSystem[] missParticles;
     public bool activeActionZone()
     {
         bool point=false;
@@ -20,9 +21,25 @@ public class Row : MonoBehaviour
                 point = true;
                 //GameObject confetti= SimplePool.Spawn(particlePrefab, actionzone.position, actionzone.rotation);
                 //confetti.GetComponent<UnpoolConfetti>().show=true;
+
             }
         }
-        return point;
+        if(point)
+        {
+
+            for (int i = 0; i < goodParticles.Length; i++)
+            {
+                goodParticles[i].Play();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < missParticles.Length; i++)
+            {
+                missParticles[i].Play();
+            }
+        }
+            return point;
     }
     public void spawnNote(float duration)
     {
